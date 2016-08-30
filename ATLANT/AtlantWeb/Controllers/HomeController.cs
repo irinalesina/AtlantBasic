@@ -103,6 +103,7 @@ namespace AtlantWeb.Controllers
                 var stockmensRes = from st in atlantDbService.GetStockmens() where st.StockmenId == detail.Stockmen.StockmenId select st;
                 detailBLL.Stockmen = stockmensRes.First();
                 atlantDbService.InsertDetail(detailBLL);
+                var f = atlantDbService.GetStockmens();
                 return RedirectToAction("Details");
             }
             return RedirectToAction("CreateDetail");

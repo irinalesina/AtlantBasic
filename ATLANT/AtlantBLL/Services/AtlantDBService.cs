@@ -62,16 +62,20 @@ namespace AtlantBLL.Services
             if (detail == null)
                 throw new ValidationException("Detail not found", "");
 
-            Mapper.CreateMap<Detail, AtlantDB.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.Ignore());
+            Mapper.CreateMap<Stockmen, AtlantDB.Models.Stockmen>();
+            Mapper.CreateMap<Detail, AtlantDB.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.MapFrom(src => src.Stockmen));
             var detailDB = Mapper.Map<Detail, AtlantDB.Models.Detail>(detail);
 
-            Mapper.CreateMap<Stockmen, AtlantDB.Models.Stockmen>();
-            var stockmenDB = Mapper.Map<Stockmen, AtlantDB.Models.Stockmen>(detail.Stockmen);
+            //Mapper.CreateMap<Stockmen, AtlantDB.Models.Stockmen>();
+            //detailDB.Stockmen = Mapper.Map<Stockmen, AtlantDB.Models.Stockmen>(detail.Stockmen);
 
-            detailDB.Stockmen = stockmenDB;
+            var t = db.Stockmens.GetAll();
+            int y = t.Count();
 
             db.Details.Create(detailDB);
             db.Save();
+            var td = db.Stockmens.GetAll();
+            int yd = t.Count();
         }
 
         public void DeleteDetail(int id)
