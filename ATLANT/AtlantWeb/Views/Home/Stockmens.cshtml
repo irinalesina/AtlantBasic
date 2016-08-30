@@ -1,6 +1,9 @@
 ﻿
 @model IEnumerable<AtlantWeb.Models.StockmenViewModel>
 
+@*<meta http-equiv="refresh" content="600">*@
+
+
 <h2>@ViewBag.Title</h2>
 
 <p>
@@ -35,7 +38,7 @@
             <td>
                 @if (item.DetailCount == 0)
                 {
-                    @Html.ActionLink("Delete", "DeleteStockmen", new { id = item.StockmenId })
+                    @Ajax.ActionLink("Delete", "DeleteStockmen", new { id = item.StockmenId}, new AjaxOptions { Confirm = "Are you sure ?" })
                 }
             </td>
         </tr>

@@ -44,7 +44,7 @@ namespace AtlantDB.Repositories
  
         public void Delete(int id)
         {
-            Stockmen stockmen = db.Stockmens.Find(id);
+            Stockmen stockmen = (from st in db.Stockmens where st.StockmenId == id select st).First();
             if (stockmen != null)
                 db.Stockmens.Remove(stockmen);
         }

@@ -93,10 +93,13 @@ namespace AtlantWeb.Controllers
             return RedirectToAction("CreateStockmen");
         }
 
+        
         [HttpPost]
         public ActionResult CreateDetail(DetailViewModel detail)
         {
-            if (ModelState.IsValid)
+            bool isModelValidWithoutStockmen = ModelState.IsValidField("DetailId") && ModelState.IsValidField("Code") && ModelState.IsValidField("Name") &&
+                ModelState.IsValidField("Amount") && ModelState.IsValidField("Special") && ModelState.IsValidField("AddDate");
+            if (isModelValidWithoutStockmen)
             {
                 Mapper.CreateMap<DetailViewModel, AtlantBLL.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.Ignore());
                 var detailBLL = Mapper.Map<DetailViewModel, AtlantBLL.Models.Detail>(detail);
@@ -106,9 +109,15 @@ namespace AtlantWeb.Controllers
                 var f = atlantDbService.GetStockmens();
                 return RedirectToAction("Details");
             }
-            return RedirectToAction("CreateDetail");
+            IEnumerable<AtlantBLL.Models.Stockmen> stockmens = atlantDbService.GetStockmens();
+            Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
+            var stockmensView = Mapper.Map<IEnumerable<AtlantBLL.Models.Stockmen>, List<StockmenViewModel>>(stockmens);
+            SelectList stocmensSL = new SelectList(stockmensView, "StockmenId", "Name");
+            ViewBag.Stockmens = stocmensSL;
+            return View(detail);
         }
 
+        
         public ActionResult DeleteStockmen(string id)
         {
             try
@@ -123,6 +132,7 @@ namespace AtlantWeb.Controllers
             return RedirectToAction("Stockmens");
         }
 
+        
         public ActionResult DeleteDetail(string id)
         {
             try
