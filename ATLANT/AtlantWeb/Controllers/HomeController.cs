@@ -38,7 +38,6 @@ namespace AtlantWeb.Controllers
         }
 
 
-        [OutputCache(Location = System.Web.UI.OutputCacheLocation.None)]
         public ActionResult Stockmens()
         {
             ViewBag.Title = "Stockmens";
@@ -68,6 +67,7 @@ namespace AtlantWeb.Controllers
 
             return View(newDetail);
         }
+
 
         public ActionResult CreateStockmen()
         {
@@ -119,7 +119,6 @@ namespace AtlantWeb.Controllers
         }
 
 
-        [OutputCache(Location = System.Web.UI.OutputCacheLocation.None)]
         public ActionResult DeleteStockmen(string id)
         {
             try
