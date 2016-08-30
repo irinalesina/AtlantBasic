@@ -1,11 +1,19 @@
-﻿
+﻿<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
 @model IEnumerable<AtlantWeb.Models.DetailViewModel>
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add new detail", "CreateDetail")
 </p>
+
+<div class="form-group">
+    <label>Search by code: </label>
+    <input id="searchValue"/>
+    <input type="button" class="btn-default" value="Search"/>
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -48,7 +56,10 @@
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Special)
+                @if(item.Special)
+                {
+                    <i class="fa fa-check-square-o" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AddDate)
@@ -57,8 +68,6 @@
                 @Html.DisplayFor(modelItem => item.Stockmen.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.DetailId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.DetailId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.DetailId })
             </td>
         </tr>

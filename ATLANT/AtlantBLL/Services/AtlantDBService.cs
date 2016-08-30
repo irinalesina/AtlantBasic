@@ -42,6 +42,19 @@ namespace AtlantBLL.Services
             var details = Mapper.Map<IEnumerable<AtlantDB.Models.Detail>, List<Detail>>(db.Details.GetAll());
             return details;
         }
+
+        public void InsertStockmen(Stockmen st)
+        {
+            if (st == null)
+                throw new ValidationException("Рабочий не найден", "");
+
+            Mapper.Initialize(cfg => cfg.CreateMap<Stockmen, AtlantDB.Models.Stockmen>());
+            var stView = Mapper.Map<Stockmen, AtlantDB.Models.Stockmen>(st);
+
+            db.Stockmens.Create(stView);
+            db.Save();
+        }
+
         public void Dispose()
         {
             db.Dispose();

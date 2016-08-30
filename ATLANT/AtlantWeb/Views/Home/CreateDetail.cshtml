@@ -1,0 +1,58 @@
+﻿@model AtlantWeb.Models.DetailViewModel
+
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("CreateDetail", "Home", FormMethod.Post)) {
+    
+    @Html.HiddenFor(model => model.DetailId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Code)
+        <div class="form-group">
+            @Html.ValidationMessageFor(model => model.Code)
+            @Html.EditorFor(model => model.Code)
+        </div>
+    </div>
+    <div class="form-group">      
+        @Html.LabelFor(model => model.Name)
+        <div class="form-group">
+            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.Name)
+        </div>
+    </div>
+    <div class="form-group">
+         @Html.LabelFor(model => model.Amount)
+        <div class="form-group">
+            @Html.ValidationMessageFor(model => model.Amount)
+            @Html.EditorFor(model => model.Amount)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Special)
+        <div class="form-group">
+            @Html.ValidationMessageFor(model => model.Special)
+            @Html.CheckBoxFor(model => model.Special)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AddDate)
+        <div class="form-group">
+            @Html.ValidationMessageFor(model => model.AddDate)
+            @Html.EditorFor(model => model.AddDate)
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.Stockmen)
+        <div class="form-group">
+            @Html.DropDownListFor(model => model.Stockmen, new SelectList((System.Collections.IEnumerable)ViewData["stockmens"]))
+        </div>
+    </div>
+
+    <p>
+        <input type="submit" value="Save"/>
+    </p>
+}
+     

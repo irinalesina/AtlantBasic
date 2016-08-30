@@ -15,7 +15,7 @@ namespace AtlantDB.Models
         public int? Amount { get; set; }
         public bool Special { get; set; }
         [Required]
-        public DateTime AddDate { get; set; }
+        public DateTime? AddDate { get; set; }
         [Required]
         public virtual Stockmen Stockmen { get; set; }
     }

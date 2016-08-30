@@ -10,6 +10,7 @@ namespace AtlantBLL.Interfaces
         int GetDetailsAmount(Stockmen stockmen);
         IEnumerable<Stockmen> GetStockmens();
         IEnumerable<Detail> GetDetails();
+        void InsertStockmen(Stockmen st);
         void Dispose();
     }
 }

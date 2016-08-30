@@ -18,14 +18,16 @@ namespace AtlantWeb.Controllers
             atlantDbService = serv;
         }
 
+
         public ActionResult Index()
         {
             return View();
         }
 
+
         public ActionResult Details()
         {
-            ViewBag.Title = "Details info";
+            ViewBag.Title = "Details";
 
             IEnumerable<AtlantBLL.Models.Detail> details = atlantDbService.GetDetails();
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Detail, DetailViewModel>());
@@ -34,9 +36,10 @@ namespace AtlantWeb.Controllers
             return View(detailsView);
         }
 
+
         public ActionResult Stockmens()
         {
-            ViewBag.Title = "Stockmens info";
+            ViewBag.Title = "Stockmens";
 
             IEnumerable<AtlantBLL.Models.Stockmen> stockmens = atlantDbService.GetStockmens();
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
@@ -44,5 +47,59 @@ namespace AtlantWeb.Controllers
 
             return View(stockmensView);
         }
+
+
+        public ActionResult CreateDetail()
+        {
+            ViewBag.Title = "Create detail";
+
+            DetailViewModel newDetail = new DetailViewModel();
+
+            IEnumerable<AtlantBLL.Models.Stockmen> stockmens = atlantDbService.GetStockmens();
+            Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
+            var stockmensView = Mapper.Map<IEnumerable<AtlantBLL.Models.Stockmen>, List<StockmenViewModel>>(stockmens);
+            IEnumerable<SelectListItem> myCollection = stockmensView
+                                           .Select(i => new SelectListItem()
+                                           {
+                                               Text = i.Name,
+                                               Value = i.StockmenId.ToString()
+                                           });
+            ViewData["stockmens"] = myCollection;
+            return View(newDetail);
+        }
+
+
+        [HttpPost]
+        public string CreateDetail(DetailViewModel detail)
+        {
+            return "Detail is created";
+        }
+
+
+        public ActionResult CreateStockmen()
+        {
+            ViewBag.Title = "Create stockmen";
+
+            StockmenViewModel stockmen = new StockmenViewModel();
+            Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
+
+            return View(stockmen);
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateStockmen(StockmenViewModel stockmen)
+        {
+            if (ModelState.IsValid)
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<StockmenViewModel, AtlantBLL.Models.Stockmen>());
+                var stockmenBLL = Mapper.Map<StockmenViewModel, AtlantBLL.Models.Stockmen>(stockmen);
+
+                atlantDbService.InsertStockmen(stockmenBLL);
+                return RedirectToAction("Stockmens");
+            }
+            return RedirectToAction("CreateStockmen");
+        }
     }
+
 }

@@ -13,7 +13,7 @@ namespace AtlantBLL.Models
         public string Name { get; set; }
         public int? Amount { get; set; }
         public bool Special { get; set; }
-        public DateTime AddDate { get; set; }
+        public DateTime? AddDate { get; set; }
         public Stockmen Stockmen { get; set; }
     }
 }

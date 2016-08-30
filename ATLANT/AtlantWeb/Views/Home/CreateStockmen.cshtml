@@ -1,0 +1,23 @@
+﻿
+@model AtlantWeb.Models.StockmenViewModel
+
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("CreateStockmen", "Home", FormMethod.Post))
+{
+
+    @Html.HiddenFor(model => model.StockmenId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        <div class="form-group">
+            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.Name)
+        </div>
+    </div>
+
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+}
