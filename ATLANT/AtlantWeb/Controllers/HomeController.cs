@@ -38,6 +38,7 @@ namespace AtlantWeb.Controllers
         }
 
 
+        [OutputCache(Location = System.Web.UI.OutputCacheLocation.None)]
         public ActionResult Stockmens()
         {
             ViewBag.Title = "Stockmens";
@@ -90,7 +91,7 @@ namespace AtlantWeb.Controllers
                 atlantDbService.InsertStockmen(stockmenBLL);
                 return RedirectToAction("Stockmens");
             }
-            return RedirectToAction("CreateStockmen");
+            return View(stockmen);
         }
 
         
@@ -117,7 +118,8 @@ namespace AtlantWeb.Controllers
             return View(detail);
         }
 
-        
+
+        [OutputCache(Location = System.Web.UI.OutputCacheLocation.None)]
         public ActionResult DeleteStockmen(string id)
         {
             try
