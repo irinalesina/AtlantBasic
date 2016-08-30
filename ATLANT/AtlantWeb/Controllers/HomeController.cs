@@ -30,7 +30,8 @@ namespace AtlantWeb.Controllers
             ViewBag.Title = "Details";
 
             IEnumerable<AtlantBLL.Models.Detail> details = atlantDbService.GetDetails();
-            Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Detail, DetailViewModel>());
+            Mapper.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>();
+            Mapper.CreateMap<AtlantBLL.Models.Detail, DetailViewModel>().ForMember(dest => dest.Stockmen, opt => opt.MapFrom(src => src.Stockmen));
             var detailsView = Mapper.Map<IEnumerable<AtlantBLL.Models.Detail>, List<DetailViewModel>>(details);
 
             return View(detailsView);

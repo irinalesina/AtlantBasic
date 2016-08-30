@@ -38,7 +38,9 @@ namespace AtlantBLL.Services
 
         public IEnumerable<Detail> GetDetails()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<AtlantDB.Models.Detail, Detail>());
+            Mapper.CreateMap<AtlantDB.Models.Stockmen, Stockmen>();
+            Mapper.CreateMap<AtlantDB.Models.Detail, Detail>().ForMember(dest => dest.Stockmen, opt => opt.MapFrom(src => src.Stockmen));
+            
             var details = Mapper.Map<IEnumerable<AtlantDB.Models.Detail>, List<Detail>>(db.Details.GetAll());
             return details;
         }
