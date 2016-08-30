@@ -47,7 +47,7 @@
     <div class="control-group">
         @Html.LabelFor(model => model.Stockmen)
         <div class="form-group">
-            @Html.DropDownListFor(model => model.Stockmen, ViewBag.Stockmens as SelectList)
+            @Html.DropDownListFor(model => model.Stockmen.StockmenId, ViewBag.Stockmens as SelectList)
         </div>
     </div>
 

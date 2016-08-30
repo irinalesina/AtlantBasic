@@ -19,6 +19,6 @@ namespace AtlantWeb.Models
         [Required]
         public DateTime? AddDate { get; set; }
         [Required]
-        public StockmenViewModel Stockmen { get; set; }
+        public StockmenViewModel Stockmen { get; set; } 
     }
 }

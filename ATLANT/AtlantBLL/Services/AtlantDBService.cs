@@ -60,8 +60,13 @@ namespace AtlantBLL.Services
             if (detail == null)
                 throw new ValidationException("Detail not found", "");
 
-            Mapper.Initialize(cfg => cfg.CreateMap<Detail, AtlantDB.Models.Detail>());
+            Mapper.CreateMap<Detail, AtlantDB.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.Ignore());
             var detailDB = Mapper.Map<Detail, AtlantDB.Models.Detail>(detail);
+
+            Mapper.CreateMap<Stockmen, AtlantDB.Models.Stockmen>();
+            var stockmenDB = Mapper.Map<Stockmen, AtlantDB.Models.Stockmen>(detail.Stockmen);
+
+            detailDB.Stockmen = stockmenDB;
 
             db.Details.Create(detailDB);
             db.Save();

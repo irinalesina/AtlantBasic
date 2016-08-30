@@ -54,6 +54,7 @@ namespace AtlantWeb.Controllers
             ViewBag.Title = "Create detail";
 
             DetailViewModel newDetail = new DetailViewModel();
+            newDetail.Stockmen = new StockmenViewModel();
 
             IEnumerable<AtlantBLL.Models.Stockmen> stockmens = atlantDbService.GetStockmens();
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
@@ -96,9 +97,10 @@ namespace AtlantWeb.Controllers
         { //ModelState.IsValid
             if (true)
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<DetailViewModel, AtlantBLL.Models.Detail>());
+                Mapper.CreateMap<DetailViewModel, AtlantBLL.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.Ignore());
                 var detailBLL = Mapper.Map<DetailViewModel, AtlantBLL.Models.Detail>(detail);
-
+                var stockmensRes = from st in atlantDbService.GetStockmens() where st.StockmenId == detail.Stockmen.StockmenId select st;
+                detailBLL.Stockmen = stockmensRes.First();
                 atlantDbService.InsertDetail(detailBLL);
                 return RedirectToAction("Details");
             }
