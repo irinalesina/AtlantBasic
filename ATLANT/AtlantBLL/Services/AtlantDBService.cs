@@ -66,14 +66,15 @@ namespace AtlantBLL.Services
             Mapper.CreateMap<Detail, AtlantDB.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.MapFrom(src => src.Stockmen));
             var detailDB = Mapper.Map<Detail, AtlantDB.Models.Detail>(detail);
 
-            //Mapper.CreateMap<Stockmen, AtlantDB.Models.Stockmen>();
-            //detailDB.Stockmen = Mapper.Map<Stockmen, AtlantDB.Models.Stockmen>(detail.Stockmen);
-
+            // to check stockmens count
             var t = db.Stockmens.GetAll();
             int y = t.Count();
 
             db.Details.Create(detailDB);
             db.Save();
+            // After Save stockmen is added to db!!!!!!!!!!!!!!!!!!!!!! fix it
+
+            // to check stockmens count
             var td = db.Stockmens.GetAll();
             int yd = t.Count();
         }
