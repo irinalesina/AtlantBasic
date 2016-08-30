@@ -100,6 +100,34 @@ namespace AtlantWeb.Controllers
             }
             return RedirectToAction("CreateStockmen");
         }
+
+        public ActionResult DeleteStockmen(string id)
+        {
+            try
+            {
+                atlantDbService.DeleteStockmen(Convert.ToInt32(id));
+                
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return RedirectToAction("Stockmens");
+        }
+
+        public ActionResult DeleteDetail(string id)
+        {
+            try
+            {
+                atlantDbService.DeleteDetail(Convert.ToInt32(id));
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return RedirectToAction("Details");
+        }
     }
 
 }

@@ -11,6 +11,9 @@ namespace AtlantBLL.Interfaces
         IEnumerable<Stockmen> GetStockmens();
         IEnumerable<Detail> GetDetails();
         void InsertStockmen(Stockmen st);
+        void InsertDetail(Detail detail);
+        void DeleteDetail(int id);
+        void DeleteStockmen(int id);
         void Dispose();
     }
 }
