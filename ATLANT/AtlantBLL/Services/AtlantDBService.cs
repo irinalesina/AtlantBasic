@@ -43,21 +43,28 @@ namespace AtlantBLL.Services
             return details;
         }
 
-        public void InsertStockmen(Stockmen st)
+        public void InsertStockmen(Stockmen stockmen)
         {
-            if (st == null)
+            if (stockmen == null)
                 throw new ValidationException("Stockmen not found", "");
 
             Mapper.Initialize(cfg => cfg.CreateMap<Stockmen, AtlantDB.Models.Stockmen>());
-            var stView = Mapper.Map<Stockmen, AtlantDB.Models.Stockmen>(st);
+            var stockmenDB = Mapper.Map<Stockmen, AtlantDB.Models.Stockmen>(stockmen);
 
-            db.Stockmens.Create(stView);
+            db.Stockmens.Create(stockmenDB);
             db.Save();
         }
 
         public void InsertDetail(Detail detail)
         {
-            throw new NotImplementedException();
+            if (detail == null)
+                throw new ValidationException("Detail not found", "");
+
+            Mapper.Initialize(cfg => cfg.CreateMap<Detail, AtlantDB.Models.Detail>());
+            var detailDB = Mapper.Map<Detail, AtlantDB.Models.Detail>(detail);
+
+            db.Details.Create(detailDB);
+            db.Save();
         }
 
         public void DeleteDetail(int id)

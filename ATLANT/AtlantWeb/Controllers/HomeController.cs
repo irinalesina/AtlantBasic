@@ -58,23 +58,13 @@ namespace AtlantWeb.Controllers
             IEnumerable<AtlantBLL.Models.Stockmen> stockmens = atlantDbService.GetStockmens();
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
             var stockmensView = Mapper.Map<IEnumerable<AtlantBLL.Models.Stockmen>, List<StockmenViewModel>>(stockmens);
-            IEnumerable<SelectListItem> myCollection = stockmensView
-                                           .Select(i => new SelectListItem()
-                                           {
-                                               Text = i.Name,
-                                               Value = i.StockmenId.ToString()
-                                           });
-            ViewData["stockmens"] = myCollection;
+
+
+            SelectList stocmensSL = new SelectList(stockmensView, "StockmenId", "Name");
+            ViewBag.Stockmens = stocmensSL;
+
             return View(newDetail);
         }
-
-
-        [HttpPost]
-        public string CreateDetail(DetailViewModel detail)
-        {
-            return "Detail is created";
-        }
-
 
         public ActionResult CreateStockmen()
         {
@@ -99,6 +89,20 @@ namespace AtlantWeb.Controllers
                 return RedirectToAction("Stockmens");
             }
             return RedirectToAction("CreateStockmen");
+        }
+
+        [HttpPost]
+        public ActionResult CreateDetail(DetailViewModel detail)
+        { //ModelState.IsValid
+            if (true)
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<DetailViewModel, AtlantBLL.Models.Detail>());
+                var detailBLL = Mapper.Map<DetailViewModel, AtlantBLL.Models.Detail>(detail);
+
+                atlantDbService.InsertDetail(detailBLL);
+                return RedirectToAction("Details");
+            }
+            return RedirectToAction("CreateDetail");
         }
 
         public ActionResult DeleteStockmen(string id)
