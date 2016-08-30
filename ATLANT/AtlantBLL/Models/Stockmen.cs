@@ -10,6 +10,6 @@ namespace AtlantBLL.Models
     {
         public int StockmenId { get; set; }
         public string Name { get; set; }
-        public int detailCount { get; set; }
+        public int DetailCount { get; set; }
     }
 }

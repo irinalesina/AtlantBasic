@@ -32,7 +32,7 @@ namespace AtlantBLL.Services
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantDB.Models.Stockmen, Stockmen>());
             var stockmens = Mapper.Map<IEnumerable<AtlantDB.Models.Stockmen>, List<Stockmen>>(db.Stockmens.GetAll());
             foreach (var stockmen in stockmens)
-                GetDetailsAmount(stockmen);
+                stockmen.DetailCount = GetDetailsAmount(stockmen);
             return stockmens;
         }
 

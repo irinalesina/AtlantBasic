@@ -95,8 +95,8 @@ namespace AtlantWeb.Controllers
 
         [HttpPost]
         public ActionResult CreateDetail(DetailViewModel detail)
-        { //ModelState.IsValid
-            if (true)
+        {
+            if (ModelState.IsValid)
             {
                 Mapper.CreateMap<DetailViewModel, AtlantBLL.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.Ignore());
                 var detailBLL = Mapper.Map<DetailViewModel, AtlantBLL.Models.Detail>(detail);

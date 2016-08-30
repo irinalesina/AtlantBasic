@@ -33,7 +33,10 @@
                 @Html.DisplayFor(modelItem => item.DetailCount)
             </td>
             <td>
-                @Html.ActionLink("Delete", "DeleteStockmen", new { id = item.StockmenId })
+                @if (item.DetailCount == 0)
+                {
+                    @Html.ActionLink("Delete", "DeleteStockmen", new { id = item.StockmenId })
+                }
             </td>
         </tr>
     }
