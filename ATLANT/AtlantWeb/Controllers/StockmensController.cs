@@ -1,8 +1,11 @@
 ﻿using AtlantBLL.Interfaces;
 using AtlantWeb.Models;
 using AutoMapper;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -62,6 +65,51 @@ namespace AtlantWeb.Controllers
             atlantDbService.DeleteStockmen(Convert.ToInt32(id));
 
             return RedirectToAction("ShowStockmens");
+        }
+
+        public FileStreamResult GetPDF()
+        {
+            MemoryStream workStream = new MemoryStream();
+            Document document = new Document();
+            PdfWriter.GetInstance(document, workStream).CloseStream = false;
+
+            document.Open();
+            var paragraphName = new Paragraph("Stockmens");
+            paragraphName.Alignment = Element.ALIGN_CENTER;
+
+            var paragraphDate = new Paragraph(DateTime.Now.ToString());
+            paragraphDate.Alignment = Element.ALIGN_CENTER;
+
+            document.Add(paragraphName);
+            document.Add(paragraphDate);
+            document.Add(new Chunk("\n"));
+
+            PdfPTable table = new PdfPTable(3);
+            table.TotalWidth = 450f;
+            table.LockedWidth = true;
+            float[] widths = new float[] { 50f, 250f, 150f };
+            table.SetWidths(widths);
+            table.HorizontalAlignment = Element.ALIGN_CENTER;
+            table.AddCell("Id");
+            table.AddCell("Name");
+            table.AddCell("DetailsCount");
+
+            foreach (var stockmen in atlantDbService.GetStockmens())
+            {
+                table.AddCell(stockmen.StockmenId.ToString());
+                table.AddCell(stockmen.Name);
+                table.AddCell(stockmen.DetailCount.ToString());
+            }
+
+            document.Add(table);
+
+            document.Close();
+
+            byte[] byteInfo = workStream.ToArray();
+            workStream.Write(byteInfo, 0, byteInfo.Length);
+            workStream.Position = 0;
+
+            return new FileStreamResult(workStream, "stockmens/pdf");
         }
 	}
 }
