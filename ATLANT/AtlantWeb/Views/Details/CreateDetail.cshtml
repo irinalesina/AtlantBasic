@@ -3,7 +3,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("CreateDetail", "Home", FormMethod.Post)) {
+@using (Html.BeginForm("CreateDetail", "Details", FormMethod.Post)) {
     
     @Html.HiddenFor(model => model.DetailId)
 

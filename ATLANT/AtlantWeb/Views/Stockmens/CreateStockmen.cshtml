@@ -4,7 +4,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("CreateStockmen", "Home", FormMethod.Post))
+@using (Html.BeginForm("CreateStockmen", "Stockmens", FormMethod.Post))
 {
 
     @Html.HiddenFor(model => model.StockmenId)
