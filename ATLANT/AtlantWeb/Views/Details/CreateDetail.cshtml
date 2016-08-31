@@ -10,37 +10,37 @@
     <div class="control-group">
         @Html.LabelFor(model => model.Code)
         <div class="form-group">
+            @Html.EditorFor(model => model.Code, new { @class = "code" })
             @Html.ValidationMessageFor(model => model.Code)
-            @Html.EditorFor(model => model.Code, new{ @class = "code" })
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(model => model.Name)
         <div class="form-group">
-            @Html.ValidationMessageFor(model => model.Name)
             @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(model => model.Amount)
         <div class="form-group">
-            @Html.ValidationMessageFor(model => model.Amount)
             @Html.EditorFor(model => model.Amount)
+            @Html.ValidationMessageFor(model => model.Amount)
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(model => model.Special)
         <div class="form-group">
-            @Html.ValidationMessageFor(model => model.Special)
             @Html.CheckBoxFor(model => model.Special)
+            @Html.ValidationMessageFor(model => model.Special)
         </div>
     </div>
 
     <div class="control-group">
         @Html.LabelFor(model => model.AddDate)
         <div class="form-group">
-            @Html.ValidationMessageFor(model => model.AddDate)
             @Html.EditorFor(model => model.AddDate)
+            @Html.ValidationMessageFor(model => model.AddDate)
         </div>
     </div>
 

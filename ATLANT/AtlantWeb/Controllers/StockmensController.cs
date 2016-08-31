@@ -59,15 +59,8 @@ namespace AtlantWeb.Controllers
 
         public ActionResult DeleteStockmen(string id)
         {
-            try
-            {
-                atlantDbService.DeleteStockmen(Convert.ToInt32(id));
+            atlantDbService.DeleteStockmen(Convert.ToInt32(id));
 
-            }
-            catch (Exception ex)
-            {
-
-            }
             return RedirectToAction("ShowStockmens");
         }
 	}

@@ -12,8 +12,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Name)
         <div class="form-group">
-            @Html.ValidationMessageFor(model => model.Name)
             @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
         </div>
     </div>
 

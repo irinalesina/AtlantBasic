@@ -1,0 +1,35 @@
+﻿
+@model IEnumerable<AtlantWeb.Models.DetailViewModel>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DetailId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @if (item.Special)
+            {
+                <i class="fa fa-check-square-o" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AddDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stockmen.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "DeleteDetail", new { id = item.DetailId })
+        </td>
+    </tr>
+}

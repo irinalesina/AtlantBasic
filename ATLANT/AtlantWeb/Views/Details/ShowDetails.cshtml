@@ -8,69 +8,49 @@
     @Html.ActionLink("Add new detail", "CreateDetail")
 </p>
 
-<div class="form-group">
+@*<div class="form-group">
     <label>Search by code: </label>
     <input id="searchValue"/>
     <input type="button" class="btn-default" value="Search"/>
+</div>*@
+<div class="form-group">
+    @using (Ajax.BeginForm("DetailsTableBody", new AjaxOptions { UpdateTargetId = "details" }))
+    {
+        <label>Search detail by code: </label>
+        <input type="text" name="code" />
+        <input type="submit" class="btn-default" value="Search" />
+    }
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DetailId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Special)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AddDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Stockmen.Name)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DetailId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @if(item.Special)
-                {
-                    <i class="fa fa-check-square-o" />
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stockmen.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "DeleteDetail", new { id = item.DetailId })
-            </td>
-        </tr>
-    }
+    <table class="table" id="searchResults">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DetailId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Special)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AddDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stockmen.Name)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="details">
+            @Html.Action("DetailsTableBody")
+        </tbody>
 
 </table>

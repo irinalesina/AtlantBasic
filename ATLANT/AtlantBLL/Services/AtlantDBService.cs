@@ -17,6 +17,8 @@ namespace AtlantBLL.Services
         {
             this.db = db;
         }
+
+
         public int GetDetailsAmount(Stockmen stockmen)
         {
             if(stockmen == null)
@@ -27,6 +29,7 @@ namespace AtlantBLL.Services
             return detailCount;
         }
 
+
         public IEnumerable<Stockmen> GetStockmens()
         {
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantDB.Models.Stockmen, Stockmen>());
@@ -36,6 +39,7 @@ namespace AtlantBLL.Services
             return stockmens;
         }
 
+
         public IEnumerable<Detail> GetDetails()
         {
             Mapper.CreateMap<AtlantDB.Models.Stockmen, Stockmen>();
@@ -44,6 +48,7 @@ namespace AtlantBLL.Services
             var details = Mapper.Map<IEnumerable<AtlantDB.Models.Detail>, List<Detail>>(db.Details.GetAll());
             return details;
         }
+
 
         public void InsertStockmen(Stockmen stockmen)
         {
@@ -57,6 +62,7 @@ namespace AtlantBLL.Services
             db.Save();
         }
 
+
         public void InsertDetail(Detail detail)
         {
             if (detail == null)
@@ -66,18 +72,11 @@ namespace AtlantBLL.Services
             Mapper.CreateMap<Detail, AtlantDB.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.MapFrom(src => src.Stockmen));
             var detailDB = Mapper.Map<Detail, AtlantDB.Models.Detail>(detail);
 
-            // to check stockmens count
-            var t = db.Stockmens.GetAll();
-            int y = t.Count();
-
             db.Details.Create(detailDB);
             db.Save();
             // After Save stockmen is added to db!!!!!!!!!!!!!!!!!!!!!! fix it
-
-            // to check stockmens count
-            var td = db.Stockmens.GetAll();
-            int yd = t.Count();
         }
+
 
         public void DeleteDetail(int id)
         {
@@ -88,6 +87,7 @@ namespace AtlantBLL.Services
             db.Details.Delete(id);
             db.Save();
         }
+
 
         public void DeleteStockmen(int id)
         {
@@ -102,6 +102,7 @@ namespace AtlantBLL.Services
             db.Stockmens.Delete(id);
             db.Save();
         }
+
 
         public void Dispose()
         {

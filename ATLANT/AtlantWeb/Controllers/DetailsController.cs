@@ -12,6 +12,7 @@ namespace AtlantWeb.Controllers
     public class DetailsController : Controller
     {
         IAtlantDBService atlantDbService;
+        
 
         public DetailsController(IAtlantDBService serv)
         {
@@ -39,9 +40,9 @@ namespace AtlantWeb.Controllers
             DetailViewModel newDetail = new DetailViewModel();
             newDetail.Stockmen = new StockmenViewModel();
 
-            IEnumerable<AtlantBLL.Models.Stockmen> stockmens = atlantDbService.GetStockmens();
+            var stockmensBLL = atlantDbService.GetStockmens();
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
-            var stockmensView = Mapper.Map<IEnumerable<AtlantBLL.Models.Stockmen>, List<StockmenViewModel>>(stockmens);
+            var stockmensView = Mapper.Map<IEnumerable<AtlantBLL.Models.Stockmen>, List<StockmenViewModel>>(stockmensBLL);
 
 
             SelectList stocmensSL = new SelectList(stockmensView, "StockmenId", "Name");
@@ -54,19 +55,25 @@ namespace AtlantWeb.Controllers
         [HttpPost]
         public ActionResult CreateDetail(DetailViewModel detail)
         {
+            // TODO: ModelState.IsValid - always false because  ModelState.IsValidField("Stockmen") always false
             bool isModelValidWithoutStockmen = ModelState.IsValidField("DetailId") && ModelState.IsValidField("Code") && ModelState.IsValidField("Name") &&
                 ModelState.IsValidField("Amount") && ModelState.IsValidField("Special") && ModelState.IsValidField("AddDate");
+
             if (isModelValidWithoutStockmen)
             {
-                Mapper.CreateMap<DetailViewModel, AtlantBLL.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.Ignore());
+                var stockmensBLL = atlantDbService.GetStockmens();
+                AtlantBLL.Models.Stockmen stockmen = stockmensBLL.Select(s => s).Where(s => s.StockmenId == detail.Stockmen.StockmenId).First();
+
+                Mapper.CreateMap<StockmenViewModel, AtlantBLL.Models.Stockmen>();
+                Mapper.CreateMap<DetailViewModel, AtlantBLL.Models.Detail>().ForMember(x => x.Stockmen, opt => opt.MapFrom(s => stockmen));
                 var detailBLL = Mapper.Map<DetailViewModel, AtlantBLL.Models.Detail>(detail);
-                var stockmensRes = from st in atlantDbService.GetStockmens() where st.StockmenId == detail.Stockmen.StockmenId select st;
-                detailBLL.Stockmen = stockmensRes.First();
+
                 atlantDbService.InsertDetail(detailBLL);
-                var f = atlantDbService.GetStockmens();
+
                 return RedirectToAction("ShowDetails");
             }
-            IEnumerable<AtlantBLL.Models.Stockmen> stockmens = atlantDbService.GetStockmens();
+
+            var stockmens = atlantDbService.GetStockmens();
             Mapper.Initialize(cfg => cfg.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>());
             var stockmensView = Mapper.Map<IEnumerable<AtlantBLL.Models.Stockmen>, List<StockmenViewModel>>(stockmens);
             SelectList stocmensSL = new SelectList(stockmensView, "StockmenId", "Name");
@@ -77,16 +84,22 @@ namespace AtlantWeb.Controllers
 
         public ActionResult DeleteDetail(string id)
         {
-            try
-            {
-                atlantDbService.DeleteDetail(Convert.ToInt32(id));
+            atlantDbService.DeleteDetail(Convert.ToInt32(id));
 
-            }
-            catch (Exception ex)
-            {
-
-            }
             return RedirectToAction("ShowDetails");
+        }
+
+        public PartialViewResult DetailsTableBody(string code = null)
+        {
+            IEnumerable<AtlantBLL.Models.Detail> details = atlantDbService.GetDetails();
+            if(!String.IsNullOrEmpty(code))
+                details = from detail in details where detail.Code == code select detail;
+            
+            Mapper.CreateMap<AtlantBLL.Models.Stockmen, StockmenViewModel>();
+            Mapper.CreateMap<AtlantBLL.Models.Detail, DetailViewModel>().ForMember(dest => dest.Stockmen, opt => opt.MapFrom(src => src.Stockmen));
+            var detailsView = Mapper.Map<IEnumerable<AtlantBLL.Models.Detail>, List<DetailViewModel>>(details);
+
+            return PartialView(detailsView); 
         }
 	}
 }
