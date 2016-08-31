@@ -8,11 +8,6 @@
     @Html.ActionLink("Add new detail", "CreateDetail")
 </p>
 
-@*<div class="form-group">
-    <label>Search by code: </label>
-    <input id="searchValue"/>
-    <input type="button" class="btn-default" value="Search"/>
-</div>*@
 <div class="form-group">
     @using (Ajax.BeginForm("DetailsTableBody", new AjaxOptions { UpdateTargetId = "details" }))
     {
@@ -22,35 +17,35 @@
     }
 </div>
 
-    <table class="table" id="searchResults">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.DetailId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Code)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Special)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AddDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Stockmen.Name)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="details">
-            @Html.Action("DetailsTableBody")
-        </tbody>
+<table class="table" id="searchResults">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Special)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stockmen.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="details">
+        @Html.Action("DetailsTableBody")
+    </tbody>
 
 </table>
