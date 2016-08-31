@@ -67,6 +67,7 @@ namespace AtlantWeb.Controllers
             return RedirectToAction("ShowStockmens");
         }
 
+
         public FileStreamResult GetPDF()
         {
             MemoryStream workStream = new MemoryStream();

@@ -4,6 +4,8 @@
 
 <h2>@ViewBag.Title</h2>
 
+<p> @Html.ActionLink("Get PDF", "GetPDF", null, new { id = "GetPDF" })</p>
+
 <p>
     @Html.ActionLink("Add new detail", "CreateDetail")
 </p>
@@ -12,7 +14,7 @@
     @using (Ajax.BeginForm("DetailsTableBody", new AjaxOptions { UpdateTargetId = "details" }))
     {
         <label>Search detail by code: </label>
-        <input type="text" name="code" />
+        <input type="text" name="code" id="code"/>
         <input type="submit" class="btn-default" value="Search" />
     }
 </div>
@@ -49,4 +51,13 @@
     </tbody>
 
 </table>
+
+@section scripts{
+    <script>
+        $('#GetPDF').click(function () {
+            var id = $('#code').val();
+            $(this).attr("href",  $(this).attr("href") + "/" + id);
+        });
+    </script>
+}
 
